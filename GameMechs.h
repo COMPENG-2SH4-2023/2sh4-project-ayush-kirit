@@ -19,18 +19,24 @@ class GameMechs
     // You will include more data members and member functions to complete your design.
 
     private:
+        objPos foodPos;
         char input;
         bool exitFlag;
-        
+        bool loseflag;
+        int score;
         int boardSizeX;
         int boardSizeY;
 
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
+        //~GameMechs();
         
         bool getExitFlagStatus();
         void setExitTrue();
+
+        bool getLoseFlagStatus();
+        void setLoseFlag();
 
         char getInput();
         void setInput(char this_input);
@@ -38,7 +44,12 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
-      
+        
+        int getScore();
+        void incrementScore();
+
+        void generateFood(objPos blockOff);
+        void getFoodPos(objPos &returnPos);
 
 };
 
