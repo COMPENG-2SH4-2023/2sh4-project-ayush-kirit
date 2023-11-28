@@ -92,20 +92,34 @@ void GameMechs::incrementScore()
     score++;
 }
 
-void GameMechs::generateFood(objPos blockOff)
+void GameMechs::generateFood(objPosArrayList *blockOff)
 {
     srand(time(NULL));
     int xCandidate, yCandidate,duplicateFound;
+    objPos tempPos; // going to have each object in the list
+    bool samePosition = true;
 
-     do{
-            xCandidate = 1 + rand() % (boardSizeX - 2); //range is 1 to 29 (inclusive)
-            yCandidate = 1 + rand() % (boardSizeY - 2); //range is 1 to 14 (inclusive)
-            foodPos.x = xCandidate;
-            foodPos.y = yCandidate;
-        } while (blockOff.isPosEqual(&foodPos));
+    while (samePosition)
+    {
+        // generate random position and set foods position to that
+        xCandidate = 1 + rand() % (boardSizeX - 2); //range is 1 to 29 (inclusive)
+        yCandidate = 1 + rand() % (boardSizeY - 2); //range is 1 to 14 (inclusive)
+        foodPos.x = xCandidate;
+        foodPos.y = yCandidate;
 
-    foodPos.x = xCandidate;
-    foodPos.y = yCandidate;
+        // check if any element in the list has the same poistion as food
+        // if it does, break out the loop and generate new ones
+        for (int i = 0; i < blockOff->getSize(); i++)
+        {
+            blockOff->getElement(tempPos, i);
+            samePosition = tempPos.isPosEqual(&foodPos);
+
+            if (samePosition)
+            {
+                break;
+            }
+        }
+    }
 }
 
 void GameMechs::getFoodPos(objPos &returnPos)
