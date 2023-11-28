@@ -74,32 +74,36 @@ void Player::movePlayer()
     switch(myDir)
     {
         case UP:
-            plr.y --;
-            if (plr.y < 1){
-                plr.y = mainGameMechsRef->getBoardSizeY() - 1;
+            playerPos.y --;
+            if (playerPos.y < 1){
+                playerPos.y = mainGameMechsRef->getBoardSizeY() - 2;
             }
             break;
 
         case DOWN:
-            plr.y ++;
-            if (plr.y > mainGameMechsRef->getBoardSizeY() - 1){
-                plr.y = 1;
+            playerPos.y ++;
+            if (playerPos.y > mainGameMechsRef->getBoardSizeY() - 2){
+                playerPos.y = 1;
             }
             break;
 
         case LEFT:
-            plr.x--;
-            if (plr.x < 1){
-                plr.x = mainGameMechsRef->getBoardSizeX() - 1;
+            playerPos.x--;
+            if (playerPos.x < 1){
+                playerPos.x = mainGameMechsRef->getBoardSizeX() - 2;
             }
             break;
 
         case RIGHT:
-            plr.x++;
-            if(plr.x > mainGameMechsRef->getBoardSizeX() - 1){
-                plr.x = 1;
+            playerPos.x++;
+            if(playerPos.x > mainGameMechsRef->getBoardSizeX() - 2){
+                playerPos.x = 1;
             }
             break;
     }
+
+
+
+    
 }
 

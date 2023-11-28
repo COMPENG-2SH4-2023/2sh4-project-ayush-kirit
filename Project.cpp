@@ -10,7 +10,7 @@ using namespace std;
 #define DELAY_CONST 100000
 GameMechs *myGM;
 Player *myPlayer;
-objPosArrayList *myList;
+//objPosArrayList *myList;
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -24,7 +24,7 @@ int main(void)
 {
 
     Initialize();
-    while(myGM->getExitFlagStatus() == false || myGM->getLoseFlagStatus == false)
+    while(myGM->getExitFlagStatus() == false || myGM->getLoseFlagStatus() == false)
     {
         GetInput();
         RunLogic();
@@ -43,7 +43,7 @@ void Initialize(void)
     MacUILib_clearScreen();
     myGM = new GameMechs;
     myPlayer = new Player(myGM);
-    myList = new objPosArrayList;
+    //myList = new objPosArrayList;
     objPos tempPos;
     myPlayer->getPlayerPos(tempPos);
     myGM->generateFood(tempPos);
@@ -51,14 +51,17 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    myGM->getInput();
+    if (MacUILib_hasChar() != 0)
+    {
+        myGM->setInput(MacUILib_getChar());
+    }
 }
 
 void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
-    myGM->clearInput();
+    
 
     objPos tempPos;
     objPos tempFood;
@@ -70,7 +73,7 @@ void RunLogic(void)
         myGM->generateFood(tempPos);
         myGM->incrementScore();
     }
-
+    myGM->clearInput();
 
 }
 
@@ -107,6 +110,10 @@ void DrawScreen(void)
                 MacUILib_printf(" ");
             }
         }
+        MacUILib_printf("\n");
+    }
+
+    MacUILib_printf("Score: %d\n", myGM->getScore());
 }
 
 void LoopDelay(void)
@@ -122,5 +129,5 @@ void CleanUp(void)
     MacUILib_uninit();
     delete myPlayer;
     delete myGM;
-    delete myList;
+    //delete myList;
 }

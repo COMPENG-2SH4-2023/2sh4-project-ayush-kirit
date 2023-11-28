@@ -1,4 +1,5 @@
 #include "GameMechs.h"
+#include "MacUILib.h"
 
 GameMechs::GameMechs()
 {
@@ -8,7 +9,7 @@ GameMechs::GameMechs()
     score = 0;
     boardSizeX = 30;
     boardSizeY = 15;
-    foodPoss.setObjPos(-1,-1,'o');
+    foodPos.setObjPos(-1,-1,'o');
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -19,7 +20,7 @@ GameMechs::GameMechs(int boardX, int boardY)
     score = 0;
     boardSizeX = boardX;
     boardSizeY = boardY;
-    foodPoss.setObjPos(-1,-1,'0');
+    foodPos.setObjPos(-1,-1,'o');
 }
 
 // do you need a destructor?
@@ -74,11 +75,16 @@ void GameMechs::setLoseFlag()
 void GameMechs::setInput(char this_input)
 {
     input = this_input;
+
+    if (input == ' ')
+    {
+        exitFlag = true;
+    }
 }
 
 void GameMechs::clearInput()
 {
-    input = NULL;
+    input = 0;
 }
 
 void GameMechs::incrementScore()
@@ -86,7 +92,7 @@ void GameMechs::incrementScore()
     score++;
 }
 
-void generateFood(objPos blockOff)
+void GameMechs::generateFood(objPos blockOff)
 {
     srand(time(NULL));
     int xCandidate, yCandidate,duplicateFound;
@@ -102,11 +108,10 @@ void generateFood(objPos blockOff)
     foodPos.y = yCandidate;
 }
 
-void getFoodPos(objPos &returnPos)
+void GameMechs::getFoodPos(objPos &returnPos)
 {
 
     returnPos.x = foodPos.x;
     returnPos.y = foodPos.y;
-    returnPos.symbol = food.symbol;
-
+    returnPos.symbol = foodPos.symbol;
 }
