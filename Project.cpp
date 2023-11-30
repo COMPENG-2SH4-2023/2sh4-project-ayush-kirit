@@ -63,7 +63,7 @@ void GetInput(void)
 void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
-    myPlayer->movePlayer();         // uses food
+    myPlayer->movePlayer();         // food generation
     myGM->clearInput();
 
 }
@@ -74,8 +74,10 @@ void DrawScreen(void)
     bool drawn;
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
     objPos tempBody;
-    objPos tempFood;
-    candy->getFoodPos(tempFood);
+    
+    objPosArrayList* tempBucket = candy->getFoodPos();
+    objPos bucketItem;
+    
     for (int y = 0; y < myGM->getBoardSizeY(); y++)
     {
         for (int x = 0; x < myGM->getBoardSizeX(); x++)
@@ -91,6 +93,15 @@ void DrawScreen(void)
                     break;
                 }
             }
+            // print the foodBucket
+            for (int j = 0; j < tempBucket->getSize(); j++){
+                tempBucket->getElement(bucketItem, j);
+                if (bucketItem.x == x && bucketItem.y == y){
+                    MacUILib_printf("%c", bucketItem.symbol);
+                    drawn = true;
+                    break;
+                }
+            }
 
             if(drawn) continue;
     
@@ -100,10 +111,10 @@ void DrawScreen(void)
                 MacUILib_printf("#");
             }
 
-            else if (x == tempFood.x && y == tempFood.y)
-            {
-                MacUILib_printf("%c", tempFood.symbol);
-            } 
+            // else if (x == tempFood.x && y == tempFood.y)
+            // {
+            //     MacUILib_printf("%c", tempFood.symbol);
+            // } 
 
             else
             {
@@ -127,13 +138,14 @@ void CleanUp(void)
     
     if (myGM->getLoseFlagStatus())
     {
-        MacUILib_printf("You Ate Yourself :( \nScore: %d\n", myGM->getScore());
+        MacUILib_printf("\nYou Ate Yourself :(\n");
     }
     else
     {
-        MacUILib_printf("Game Exited!\nScore: %d\n", myGM->getScore());
+        MacUILib_printf("\nGame Exited!\n");
     }
     MacUILib_uninit();
     delete myPlayer;
     delete myGM;
+    delete candy;
 }

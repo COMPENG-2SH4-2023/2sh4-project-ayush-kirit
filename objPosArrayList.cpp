@@ -66,3 +66,10 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
 
     returnPos = aList[index];
 }
+
+
+void objPosArrayList::setElement(objPos thisPos, int index){            // added
+   
+   aList[index] = thisPos;
+
+}

@@ -109,24 +109,56 @@ void Player::movePlayer()
             break;
     }
 
-    objPos tempFood;
-    apple->getFoodPos(tempFood);
+    
+    // collision check:
 
-    if(tempFood.isPosEqual(&currentHead))
-    {
-        playerPosList->insertHead(currentHead);
-        apple->generateFood(playerPosList, mainGameMechsRef);
-        mainGameMechsRef->incrementScore();
+    objPosArrayList* basket = apple->getFoodPos();
+    objPos tempFood;
+    bool flag = false;
+    
+
+    for (int i = 0; i < basket->getSize(); i++){                    // 0 to 4 (inclusive)
+        basket->getElement(tempFood, i);                        
+
+        if(tempFood.isPosEqual(&currentHead)){
+            playerPosList->insertHead(currentHead);
+            mainGameMechsRef->incrementScore();
+
+            // remove collected item
+            objPos outOfBound(-1, -1, 'Z');
+            basket->setElement(outOfBound, i);
+
+            // add a counter here for how many food items where collected
+            apple->incrementCollectedFood();
+
+            // stop other situation:
+            flag = true;
+            break;
+        }
+
     }
 
-    else
+    // no collision:
+    if (flag == false)
     {
         playerPosList->insertHead(currentHead);
         playerPosList->removeTail();
     }
 
 
+    if (apple->getCollectedFood() == basket->getSize()){
+        apple->generateFood(playerPosList, mainGameMechsRef);
+        apple->resetCollectedFood();
+    }
+
+    // if food counter == 5, generate more items
+
+        // apple->generateFood(playerPosList, mainGameMechsRef);    // change so that all 5 need to be collected before generation
     
+
+
+    // suicide snake implementation:
+
     //playerPosList->getHeadElement(currentHead); not sure if current head has to be updated after new one inserted
     objPos tempPos; // going to have each object in the list
     bool samePosition = false;

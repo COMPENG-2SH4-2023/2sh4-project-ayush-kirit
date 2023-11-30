@@ -14,13 +14,18 @@ using namespace std;
 class Food
 {
     private:
-        objPos foodPos;
+        objPosArrayList* foodBucket;
+        int collectedFood;                      // added
     public:
         Food();
         ~Food();
 
+        int getCollectedFood();
+
         void generateFood(objPosArrayList *blockOff, GameMechs* GM);
-        void getFoodPos(objPos &returnPos);
+        objPosArrayList* getFoodPos();
+        void incrementCollectedFood();          // added
+        void resetCollectedFood();              // added
 };
 
 
