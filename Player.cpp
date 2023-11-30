@@ -1,10 +1,12 @@
 #include "Player.h"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
+
+    apple = thisFoodRef;
 
     // more actions to be included
     objPos tempPos;
@@ -108,12 +110,12 @@ void Player::movePlayer()
     }
 
     objPos tempFood;
-    mainGameMechsRef->getFoodPos(tempFood);
+    apple->getFoodPos(tempFood);
 
     if(tempFood.isPosEqual(&currentHead))
     {
         playerPosList->insertHead(currentHead);
-        mainGameMechsRef->generateFood(playerPosList);
+        apple->generateFood(playerPosList, mainGameMechsRef);
         mainGameMechsRef->incrementScore();
     }
 

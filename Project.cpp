@@ -2,6 +2,7 @@
 #include "MacUILib.h"
 #include "objPos.h"
 #include "GameMechs.h"
+#include "Food.h"           // added post iteration 3
 #include "Player.h"
 #include "objPosArrayList.h"
 
@@ -10,6 +11,8 @@ using namespace std;
 #define DELAY_CONST 100000
 GameMechs *myGM;
 Player *myPlayer;
+Food *candy;
+
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -41,9 +44,12 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
     myGM = new GameMechs;
-    myPlayer = new Player(myGM);
+    candy = new Food();                 // default food, free????
+    myPlayer = new Player(myGM, candy);
+    
+    
     objPosArrayList *tempList = myPlayer->getPlayerPos();
-    myGM->generateFood(tempList);
+    candy->generateFood(tempList, myGM);       // generate food
 }
 
 void GetInput(void)
@@ -57,7 +63,7 @@ void GetInput(void)
 void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
-    myPlayer->movePlayer();
+    myPlayer->movePlayer();         // uses food
     myGM->clearInput();
 
 }
@@ -69,7 +75,7 @@ void DrawScreen(void)
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
     objPos tempBody;
     objPos tempFood;
-    myGM->getFoodPos(tempFood);
+    candy->getFoodPos(tempFood);
     for (int y = 0; y < myGM->getBoardSizeY(); y++)
     {
         for (int x = 0; x < myGM->getBoardSizeX(); x++)
@@ -118,14 +124,14 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    
     if (myGM->getLoseFlagStatus())
     {
-        MacUILib_printf("You ate yourself!\nScore: %d\n", myGM->getScore());
+        MacUILib_printf("You Ate Yourself :( \nScore: %d\n", myGM->getScore());
     }
     else
     {
-        MacUILib_printf("You exited!\nScore: %d\n", myGM->getScore());
+        MacUILib_printf("Game Exited!\nScore: %d\n", myGM->getScore());
     }
     MacUILib_uninit();
     delete myPlayer;
