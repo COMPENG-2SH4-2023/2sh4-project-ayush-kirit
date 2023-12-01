@@ -113,16 +113,55 @@ void Player::movePlayer()
     // collision check:
 
     objPosArrayList* basket = apple->getFoodPos();
-    objPos tempFood;
+    objPos tempFood, increaseS;
     bool flag = false;
-    
+    char eaten, i, j;
 
     for (int i = 0; i < basket->getSize(); i++){                    // 0 to 4 (inclusive)
         basket->getElement(tempFood, i);                        
 
         if(tempFood.isPosEqual(&currentHead)){
-            playerPosList->insertHead(currentHead);
-            mainGameMechsRef->incrementScore();
+
+            // get the symbol of the collected food
+            eaten = tempFood.getSymbol();
+            // take nessessary action
+
+// add length of 4 -> '@'
+// list of objPos for the next three heads
+// for loop using Dir switch case
+
+
+// not disappearing, thus action repeats  ==> ____becuase of for loops. Why?____
+
+            if (eaten == '@'){                       
+                playerPosList->getTailElement(increaseS);      // +10 score, +4 size
+                playerPosList->insertHead(currentHead);
+                for (j = 0; j < 3; j++)   
+                    playerPosList->insertTail(increaseS);           
+
+                for (j = 0; j < 10; j++){
+                    mainGameMechsRef->incrementScore();                      
+                }
+            }
+            else if (eaten == '6'){                             
+                playerPosList->insertHead(currentHead);         // +2 score, -3 size (1 insert and 4 remove)
+                if (playerPosList->getSize() > 4){             
+                    for (j = 0; j < 4; j++){
+                        playerPosList->removeTail();
+                    }
+                    
+                }
+                mainGameMechsRef->incrementScore();
+                mainGameMechsRef->incrementScore();
+            }
+            else if (eaten == 'o'){                              // +1 score, +1 size
+                playerPosList->insertHead(currentHead);
+                mainGameMechsRef->incrementScore();
+                
+            }         
+
+
+            // ______________this can stay the same:_______________
 
             // remove collected item
             objPos outOfBound(-1, -1, 'Z');
@@ -145,17 +184,12 @@ void Player::movePlayer()
         playerPosList->removeTail();
     }
 
-
+    // when all items collected, generate new ones
     if (apple->getCollectedFood() == basket->getSize()){
         apple->generateFood(playerPosList, mainGameMechsRef);
         apple->resetCollectedFood();
     }
-
-    // if food counter == 5, generate more items
-
-        // apple->generateFood(playerPosList, mainGameMechsRef);    // change so that all 5 need to be collected before generation
     
-
 
     // suicide snake implementation:
 

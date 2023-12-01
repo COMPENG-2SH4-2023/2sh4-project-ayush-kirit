@@ -44,7 +44,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
     myGM = new GameMechs;
-    candy = new Food();                 // default food, free????
+    candy = new Food();                 
     myPlayer = new Player(myGM, candy);
     
     
@@ -83,6 +83,7 @@ void DrawScreen(void)
         for (int x = 0; x < myGM->getBoardSizeX(); x++)
         {
             drawn = false;
+            // print snake
             for (int i = 0; i < playerBody->getSize(); i++)
             {
                 playerBody->getElement(tempBody, i);
@@ -93,6 +94,8 @@ void DrawScreen(void)
                     break;
                 }
             }
+            if(drawn) continue;
+
             // print the foodBucket
             for (int j = 0; j < tempBucket->getSize(); j++){
                 tempBucket->getElement(bucketItem, j);
@@ -105,17 +108,13 @@ void DrawScreen(void)
 
             if(drawn) continue;
     
-
+            // print border
             if (x == 0 || x == myGM->getBoardSizeX() - 1 || y == 0 || y == myGM->getBoardSizeY() - 1)
             {  
                 MacUILib_printf("#");
             }
 
-            // else if (x == tempFood.x && y == tempFood.y)
-            // {
-            //     MacUILib_printf("%c", tempFood.symbol);
-            // } 
-
+            // print "nothing"
             else
             {
                 MacUILib_printf(" ");
@@ -124,7 +123,7 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    MacUILib_printf("Score: %d\n", myGM->getScore());
+    MacUILib_printf("Score: %d\nSPECIAL FOODS:\n    Cherry '6'     -- +2 score,  -3 size\n    Watermelon '@' -- +10 score, +4 size", myGM->getScore());
 }
 
 void LoopDelay(void)
@@ -138,11 +137,11 @@ void CleanUp(void)
     
     if (myGM->getLoseFlagStatus())
     {
-        MacUILib_printf("\nYou Ate Yourself :(\n");
+        MacUILib_printf("\n\n       YOU ATE YOURSELF :(\n");
     }
     else
     {
-        MacUILib_printf("\nGame Exited!\n");
+        MacUILib_printf("\n\n       GAME EXITED!\n");
     }
     MacUILib_uninit();
     delete myPlayer;

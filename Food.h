@@ -20,7 +20,7 @@ class Food
         Food();
         ~Food();
 
-        int getCollectedFood();
+        int getCollectedFood();                 // added
 
         void generateFood(objPosArrayList *blockOff, GameMechs* GM);
         objPosArrayList* getFoodPos();

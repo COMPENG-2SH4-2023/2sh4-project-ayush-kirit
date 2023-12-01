@@ -33,7 +33,7 @@ void Food::generateFood(objPosArrayList *blockOff, GameMechs* GM){
     // (bonus)
     int count = 0, i;
     objPos tempFood;
-    int bucketSize = foodBucket->getSize();                 // 5 for this project, but now more customizable for future developers
+    int bucketSize = foodBucket->getSize(), coin1 = 0, coin2 = 0;                 // 5 for this project, but now more customizable for future developers
 
     // // empty out current food Bucket
     // for (i = 0; i < foodBucket->getSize(); i++){            // 0 to 4 (inclusive)
@@ -47,6 +47,11 @@ void Food::generateFood(objPosArrayList *blockOff, GameMechs* GM){
         xCandidate = 1 + rand() % (GM->getBoardSizeX() - 2); //range is 1 to 29 (inclusive)
         yCandidate = 1 + rand() % (GM->getBoardSizeY() - 2); //range is 1 to 14 (inclusive)
 
+        // random variable for probability of special foods:
+        coin1 = rand() % 10;
+        coin2 = rand() % 10;
+
+
         // set to a temp variable
         tempFood.x = xCandidate;
         tempFood.y = yCandidate;
@@ -59,6 +64,8 @@ void Food::generateFood(objPosArrayList *blockOff, GameMechs* GM){
 
             if (samePosition) break;
         }
+        // if anything overlaps, retry, and don't let next forloop overwrite samePosition
+        if (samePosition) continue;
 
         // check if temp overlaps previously generated foods
         for (i = 0; i < count; i++){
@@ -75,14 +82,26 @@ void Food::generateFood(objPosArrayList *blockOff, GameMechs* GM){
 
         // generate '@'
         if (count == 0){
-            tempPos.setObjPos(xCandidate, yCandidate, '@');
-            foodBucket->setElement(tempPos, count);
+            if (coin1 < 7){                                            
+                tempPos.setObjPos(xCandidate, yCandidate, '@');
+                foodBucket->setElement(tempPos, count);
+            }
+            else{
+                tempPos.setObjPos(xCandidate, yCandidate, 'o');
+                foodBucket->setElement(tempPos, count);
+            }
         }
 
         // generate '6'
         else if (count == 1){
-            tempPos.setObjPos(xCandidate, yCandidate, '6');
-            foodBucket->setElement(tempPos, count);
+            if (coin2 < 7){
+                tempPos.setObjPos(xCandidate, yCandidate, '6');
+                foodBucket->setElement(tempPos, count);
+            }
+            else{
+                tempPos.setObjPos(xCandidate, yCandidate, 'o');
+                foodBucket->setElement(tempPos, count);               
+            }
         }
 
         // generate three guaranteed o's
