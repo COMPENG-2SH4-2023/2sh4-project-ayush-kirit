@@ -137,7 +137,15 @@ void CleanUp(void)
     
     if (myGM->getLoseFlagStatus())
     {
-        MacUILib_printf("\n\n       YOU ATE YOURSELF :(\n");
+        objPosArrayList* checkwin = myPlayer->getPlayerPos(); // to check if snake is at its max length
+        if (checkwin->getSize() == ARRAY_MAX_CAP)
+        {
+            MacUILib_printf("\n\n       YOU WIN!\n");
+        }
+        else
+        {
+            MacUILib_printf("\n\n       YOU ATE YOURSELF :(\n");
+        }
     }
     else
     {

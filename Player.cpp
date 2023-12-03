@@ -193,6 +193,13 @@ void Player::movePlayer()
             break;
         }
     }
+
+    // win condition
+    if (playerPosList->getSize() == ARRAY_MAX_CAP)
+    {
+        mainGameMechsRef->setLoseFlag();
+        mainGameMechsRef->setExitTrue();
+    }
     
 }
 
