@@ -53,7 +53,7 @@ void Initialize(void)
     
     
     objPosArrayList *tempList = myPlayer->getPlayerPos();
-    candy->generateFood(tempList, myGM);       
+    candy->generateFood(tempList, myGM);  // block snake and get game border     
 }
 
 void GetInput(void)

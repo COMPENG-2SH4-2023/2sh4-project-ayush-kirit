@@ -57,7 +57,7 @@ void Food::generateFood(objPosArrayList *blockOff, GameMechs* GM){
             if (samePosition) break;
         }
         
-        // if anything overlaps, retry, and don't let next forloop overwrite samePosition
+        // if anything overlaps, retry, and don't let next for-loop overwrite samePosition
         if (samePosition) continue;
 
         // check if temp overlaps previously generated foods

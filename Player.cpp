@@ -70,6 +70,8 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer()
 {
+    // calculate the position of the next head
+    
     objPos currentHead;
     playerPosList->getHeadElement(currentHead);
     switch(myDir)
@@ -109,7 +111,8 @@ void Player::movePlayer()
     objPosArrayList* basket = apple->getFoodPos();
     objPos tempFood, increaseS;
     bool flag = false;
-    char eaten, i, j;
+    char eaten;
+    int i, j;
 
     for (int i = 0; i < basket->getSize(); i++){                    
         basket->getElement(tempFood, i);                        
@@ -118,10 +121,8 @@ void Player::movePlayer()
 
             // get the symbol of the collected food
             eaten = tempFood.getSymbol();
+                        
             // take nessessary action
-
-
-
             if (eaten == '@'){                       
                 playerPosList->getTailElement(increaseS);      // +10 score, +4 size
                 playerPosList->insertHead(currentHead);
