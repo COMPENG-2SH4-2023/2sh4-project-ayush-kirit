@@ -9,6 +9,8 @@
 using namespace std;
 
 #define DELAY_CONST 100000
+
+//references to the objects used
 GameMechs *myGM;
 Player *myPlayer;
 Food *candy;
@@ -43,9 +45,11 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
+
+    // initialize objects on the heap
     myGM = new GameMechs;
     candy = new Food();                 
-    myPlayer = new Player(myGM, candy);
+    myPlayer = new Player(myGM, candy); // gives player the gamemechs and food objects being used and updated in the main game
     
     
     objPosArrayList *tempList = myPlayer->getPlayerPos();
@@ -71,7 +75,8 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
-    bool drawn;
+    bool drawn; // if snake is drawn
+
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
     objPos tempBody;
     
@@ -134,7 +139,7 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    
+    // lose flag only set if game won or lost by consuming itself
     if (myGM->getLoseFlagStatus())
     {
         objPosArrayList* checkwin = myPlayer->getPlayerPos(); // to check if snake is at its max length
@@ -151,7 +156,10 @@ void CleanUp(void)
     {
         MacUILib_printf("\n\n       GAME EXITED!\n");
     }
+    
     MacUILib_uninit();
+
+    // delete objects on the heap
     delete myPlayer;
     delete myGM;
     delete candy;

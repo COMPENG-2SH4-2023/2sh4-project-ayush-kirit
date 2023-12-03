@@ -37,8 +37,6 @@ bool GameMechs::getLoseFlagStatus()
 
 char GameMechs::getInput()
 {
-    
-    
     return input;
 }
 
@@ -70,7 +68,7 @@ void GameMechs::setLoseFlag()
 void GameMechs::setInput(char this_input)
 {
     input = this_input;
-
+    // exit key is [SPACE]
     if (input == ' ')
     {
         setExitTrue();

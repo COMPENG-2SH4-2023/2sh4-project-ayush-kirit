@@ -22,7 +22,9 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    
+    // shift values in the list one index to the right (increment by 1)
+    // insert new head at the empty first index
+
     for (int i = sizeList; i > 0; i--){
         aList[i] = aList[i-1];
     }
@@ -32,13 +34,14 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
- 
-    
     aList[sizeList++] = thisPos;
 }
 
 void objPosArrayList::removeHead()
 {
+    // shift values in the list one index to the left (decrement by 1)
+    // automatically deletes/removes head
+
     for(int i = 0; i < sizeList - 1; i++){   
         aList[i] = aList[i + 1];  
     }

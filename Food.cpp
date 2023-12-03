@@ -3,6 +3,7 @@
 Food::Food(){
     foodBucket = new objPosArrayList();
     
+    // intialize the 5 foods outside the border
     objPos tempFood;
     for (int i = 0; i < 5; i++){
         tempFood.setObjPos(-1,-1,'o');

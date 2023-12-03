@@ -1,7 +1,7 @@
 #ifndef OBJPOS_ARRAYLIST_H
 #define OBJPOS_ARRAYLIST_H
 
-#define ARRAY_MAX_CAP 450 // size of gameboard
+#define ARRAY_MAX_CAP 450 // size of default gameboard
 
 #include "objPos.h"
 

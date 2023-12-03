@@ -3,11 +3,14 @@
 
 Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
 {
+    // gets the gamemechs and food objects being used and updated in the main game
     mainGameMechsRef = thisGMRef;
-    myDir = STOP;
     apple = thisFoodRef;
 
+    myDir = STOP;
+
     objPos tempPos;
+    // snake initialized at the center of the board
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '*');
 
     playerPosList = new objPosArrayList();
@@ -101,7 +104,7 @@ void Player::movePlayer()
     }
 
     
-    // collision check:
+    // collision with food check:
 
     objPosArrayList* basket = apple->getFoodPos();
     objPos tempFood, increaseS;
@@ -180,7 +183,7 @@ void Player::movePlayer()
     objPos tempPos; 
     bool samePosition = false;
 
-
+    // check if the head of the snake has the same position with any of the rest of the body
     for (int i = 1; i < playerPosList->getSize(); i++)
     {
         playerPosList->getElement(tempPos, i);
@@ -194,7 +197,7 @@ void Player::movePlayer()
         }
     }
 
-    // win condition
+    // win condition (if snake length reaches max array length)
     if (playerPosList->getSize() == ARRAY_MAX_CAP)
     {
         mainGameMechsRef->setLoseFlag();
