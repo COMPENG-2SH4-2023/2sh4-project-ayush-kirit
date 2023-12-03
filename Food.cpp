@@ -11,12 +11,7 @@ Food::Food(){
 
     collectedFood = 0;
     
-    // tempFood.setObjPos(-1,-1,'@');
-    // foodBucket->insertTail(tempFood);
-
-    // tempFood.setObjPos(-1,-1,'6');
-    // foodBucket->insertTail(tempFood);
-    
+   
 }
 
 Food::~Food(){
@@ -27,25 +22,21 @@ void Food::generateFood(objPosArrayList *blockOff, GameMechs* GM){
     srand(time(NULL));
 
     int xCandidate, yCandidate;
-    objPos tempPos; // each snake element
+    objPos tempPos; 
     bool samePosition;
 
     // (bonus)
     int count = 0, i;
     objPos tempFood;
-    int bucketSize = foodBucket->getSize(), coin1 = 0, coin2 = 0;                 // 5 for this project, but now more customizable for future developers
+    int bucketSize = foodBucket->getSize(), coin1 = 0, coin2 = 0;                
 
-    // // empty out current food Bucket
-    // for (i = 0; i < foodBucket->getSize(); i++){            // 0 to 4 (inclusive)
-    //     foodBucket->removeTail();
-    // }
 
-    // while (count < foodBucket->getSize())
+
     while (count < bucketSize)
     {
         // random x and y:
-        xCandidate = 1 + rand() % (GM->getBoardSizeX() - 2); //range is 1 to 29 (inclusive)
-        yCandidate = 1 + rand() % (GM->getBoardSizeY() - 2); //range is 1 to 14 (inclusive)
+        xCandidate = 1 + rand() % (GM->getBoardSizeX() - 2); 
+        yCandidate = 1 + rand() % (GM->getBoardSizeY() - 2); 
 
         // random variable for probability of special foods:
         coin1 = rand() % 10;
@@ -64,6 +55,7 @@ void Food::generateFood(objPosArrayList *blockOff, GameMechs* GM){
 
             if (samePosition) break;
         }
+        
         // if anything overlaps, retry, and don't let next forloop overwrite samePosition
         if (samePosition) continue;
 
@@ -78,7 +70,6 @@ void Food::generateFood(objPosArrayList *blockOff, GameMechs* GM){
         // if anything overlaps, retry
         if (samePosition) continue;
         
-        // set coordinates to specific food element
 
         // generate '@'
         if (count == 0){

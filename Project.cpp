@@ -2,7 +2,7 @@
 #include "MacUILib.h"
 #include "objPos.h"
 #include "GameMechs.h"
-#include "Food.h"           // added post iteration 3
+#include "Food.h"           
 #include "Player.h"
 #include "objPosArrayList.h"
 
@@ -49,7 +49,7 @@ void Initialize(void)
     
     
     objPosArrayList *tempList = myPlayer->getPlayerPos();
-    candy->generateFood(tempList, myGM);       // generate food
+    candy->generateFood(tempList, myGM);       
 }
 
 void GetInput(void)
@@ -63,7 +63,7 @@ void GetInput(void)
 void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
-    myPlayer->movePlayer();         // food generation
+    myPlayer->movePlayer();        
     myGM->clearInput();
 
 }

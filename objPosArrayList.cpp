@@ -22,7 +22,7 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    // check if list is full?
+    
     for (int i = sizeList; i > 0; i--){
         aList[i] = aList[i-1];
     }
@@ -32,7 +32,7 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
-    // check?
+ 
     
     aList[sizeList++] = thisPos;
 }
@@ -40,14 +40,14 @@ void objPosArrayList::insertTail(objPos thisPos)
 void objPosArrayList::removeHead()
 {
     for(int i = 0; i < sizeList - 1; i++){   
-        aList[i] = aList[i + 1];  // shuffling towards the head
+        aList[i] = aList[i + 1];  
     }
-    sizeList--; // last index of list ready to be overwritten
+    sizeList--; 
 }
 
 void objPosArrayList::removeTail()
 {
-    sizeList--;  // overwrite last element
+    sizeList--;  
 }
 
 void objPosArrayList::getHeadElement(objPos &returnPos)
@@ -62,7 +62,6 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
-    // error checking?
 
     returnPos = aList[index];
 }

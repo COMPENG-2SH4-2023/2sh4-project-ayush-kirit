@@ -5,10 +5,8 @@ Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-
     apple = thisFoodRef;
 
-    // more actions to be included
     objPos tempPos;
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '*');
 
@@ -20,23 +18,17 @@ Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
 
 Player::~Player()
 {
-    // delete any heap members here
-    //      no heap member yet, leave empty for now
     delete playerPosList;
 }
 
 objPosArrayList* Player::getPlayerPos()
 {
-    // return the reference to the playerPos arrray list
     return playerPosList;
 
 }
 
 void Player::updatePlayerDir()
 {
-    // PPA3 input processing logic   
-    
-    // How to get input!?!?
     
     char input = mainGameMechsRef->getInput();
 
@@ -75,7 +67,6 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer()
 {
-    // PPA3 Finite State Machine logic
     objPos currentHead;
     playerPosList->getHeadElement(currentHead);
     switch(myDir)
@@ -117,7 +108,7 @@ void Player::movePlayer()
     bool flag = false;
     char eaten, i, j;
 
-    for (int i = 0; i < basket->getSize(); i++){                    // 0 to 4 (inclusive)
+    for (int i = 0; i < basket->getSize(); i++){                    
         basket->getElement(tempFood, i);                        
 
         if(tempFood.isPosEqual(&currentHead)){
@@ -126,12 +117,7 @@ void Player::movePlayer()
             eaten = tempFood.getSymbol();
             // take nessessary action
 
-// add length of 4 -> '@'
-// list of objPos for the next three heads
-// for loop using Dir switch case
 
-
-// not disappearing, thus action repeats  ==> ____becuase of for loops. Why?____
 
             if (eaten == '@'){                       
                 playerPosList->getTailElement(increaseS);      // +10 score, +4 size
@@ -160,8 +146,6 @@ void Player::movePlayer()
                 
             }         
 
-
-            // ______________this can stay the same:_______________
 
             // remove collected item
             objPos outOfBound(-1, -1, 'Z');
@@ -192,9 +176,8 @@ void Player::movePlayer()
     
 
     // suicide snake implementation:
-
-    //playerPosList->getHeadElement(currentHead); not sure if current head has to be updated after new one inserted
-    objPos tempPos; // going to have each object in the list
+    
+    objPos tempPos; 
     bool samePosition = false;
 
 
