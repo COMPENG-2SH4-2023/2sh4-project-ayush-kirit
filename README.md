@@ -14,8 +14,8 @@ StudentID: [400450881]
 
 Member 2:
 
-Section: [Insert your lab section]
+Section: [L06]
 
-MacID: [Insert your macID here]
+MacID: [mandk1]
 
-StudentID: [Insert your numerical student ID here]
+StudentID: [400466097]
